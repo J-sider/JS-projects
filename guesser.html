@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guesser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Explora&family=Oswald&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Explora", cursive;
+        font-size: 2rem;
+        box-sizing: border-box;
+        background-color: black;
+        color: goldenrod;
+      }
+      h1 {
+        text-align: center;
+        font-size: 5rem;
+      }
+
+      .content {
+        display: flex;
+        border: 5px solid black;
+        border-radius: 5px;
+        width: 30%;
+        margin: 0 auto;
+        flex-direction: column;
+        height: 300px;
+        justify-content: center;
+      }
+
+      .greeting {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+        font-size: 4rem;
+        margin-bottom: 40px;
+      }
+
+      .button_wrapper {
+        display: flex;
+        height: 50px;
+        /* border: 1px solid black; */
+      }
+
+      button {
+        margin: 0 auto;
+        align-self: center;
+        background-color: rgb(87, 8, 8);
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 30px #5b0505;
+        border: 2px solid black;
+        color: goldenrod;
+        transition: all 1s;
+        width: 100px;
+        font-family: "Oswald", sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background-color: goldenrod;
+        color: black;
+        transform: scale(1.2);
+        /* border: 5px solid black; */
+      }
+
+      .display1 {
+        text-align: center;
+        padding-top: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Guess the Game of Thrones Character</h1>
+
+    <div class="content">
+      <div class="greeting">Hello,&nbsp; <span id="user_name"></span></div>
+      <div class="button_wrapper">
+        <button class="btn" type="button" onclick="character_input()">
+          Click to begin
+        </button>
+      </div>
+      <span class="display1"></span>
+    </div>
+  </body>
+  <script>
+    var inputName = prompt("Welcome. Enter your name below:");
+    var userName = document.getElementById("user_name");
+    userName.innerText = inputName + ".";
+    var display = document.querySelector(".display1");
+    var body = document.querySelector("body");
+
+    var winner = "Tywin"; //this variable can be outside of the function and still works
+
+    function character_input() {
+      while (true) {
+        var guess = prompt("Guess the game of thrones character");
+        if (guess == winner) {
+          //   alert("Winner");
+          display.innerText = "You Win!";
+          body.style.backgroundColor = "#5b0505";
+          body.style.color = "black";
+          break;
+        }
+      }
+    }
+  </script>
+</html>

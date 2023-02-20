@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TipClaculator</title>
+  </head>
+  <body>
+    <h1>Tip Calculator</h1>
+
+    <div>
+      <label for="check_amount">Check Amount </label>
+      <input type="number" name="check_amount" id="check_amount" />
+      <br />
+      <label for="tip_amount">Tip %</label>
+      <input type="number" name="tip_percentage" id="tip_amount" class="tip2" />
+      <br />
+      <button class="btn" type="button" onclick="tipcalc()">Calculate</button>
+      <div>Tip amount <span class="output1"></span></div>
+      <div>
+        Total amount
+        <span class="output2"></span>
+      </div>
+    </div>
+
+    <script>
+      function tipcalc() {
+        var check_amount = Number(
+          document.getElementById("check_amount").value
+        );
+        // var check_value = Number(check_amount.value);
+        var tip_amount = document.getElementById("tip_amount").value;
+        // var tip_value = Number(tip_amount.value);
+        var tip_percentage = tip_amount / 100;
+
+        // We can add the value as a second variable or as part of the same statement
+        // need to make sure to cast the variable as a number
+
+        // console.log(tip_amount, check_amount);
+
+        tip_amount = Number(tip_amount);
+
+        var tip_final = tip_percentage * check_amount;
+        var check_final = tip_final + check_amount;
+
+        var tip_display = document.querySelector(".output1");
+        var total_display = document.querySelector(".output2");
+
+        tip_display.innerText = tip_final;
+        total_display.innerText = check_final;
+      }
+    </script>
+  </body>
+</html>

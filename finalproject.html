@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Final Project</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      font-family: "Indie Flower", cursive;
+      font-size: 80px;
+      text-align: center;
+    }
+    .main_content {
+      padding-top: 20%;
+      padding-bottom: 25%;
+    }
+
+    .letter {
+      display: inline-block;
+      transition: all 300ms ease-in-out;
+      margin-top: 80px;
+      margin-bottom: 80px;
+    }
+    .letter.active {
+      transform: scale(1.5) rotate(30deg);
+      color: blue;
+      font-size: 100px;
+    }
+  </style>
+  <body>
+    <div class="main_content">This is the Final Project</div>
+  </body>
+  <script>
+    var title = document.querySelector(".main_content");
+    var letters = title.innerText.split("");
+    let html = "";
+
+    letters.forEach((letter) => {
+      let classes = "";
+      if (letter !== " ") {
+        classes = "letter js-letter";
+      }
+      html = html + `<span class ="${classes}">${letter}</span>`;
+    });
+
+    title.innerHTML = html;
+    const jsLetters = document.querySelectorAll(".js-letter");
+    jsLetters.forEach((node) => {
+      node.addEventListener("mouseover", function (e) {
+        this.classList.add("active");
+      });
+      node.addEventListener("mouseout", function (e) {
+        this.classList.remove("active");
+      });
+    });
+  </script>
+</html>
