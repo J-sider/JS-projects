@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timer</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: red;
+      font-family: "Orbitron", sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+    .timer {
+      display: block;
+      width: 200px;
+      margin: 0 auto;
+      border: 1px solid white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 0px 10px white;
+    }
+
+    .timer_part {
+      font-size: 36px;
+    }
+
+    .timer_btn {
+      width: 50px;
+      height: 50px;
+      margin-left: 10px;
+      border-radius: 50%;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      transition: all 200ms ease-in-out;
+    }
+
+    .timer_btn:hover {
+      box-shadow: 0 0px 10px white;
+    }
+    .timer_btn:active {
+      background-color: black;
+      color: white;
+    }
+
+    .timer_btn-start {
+      background-color: rgb(15, 134, 15);
+    }
+
+    .timer_btn-stop {
+      background-color: red;
+    }
+
+    .start-stop {
+      cursor: pointer;
+    }
+
+    .button_area {
+      margin: 0 auto;
+      margin-top: 10px;
+      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      justify-content: space-around;
+      flex-direction: column;
+    }
+
+    #stop {
+      cursor: pointer;
+      background-color: black;
+      color: red;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      width: 80px;
+    }
+    #stop:hover {
+      box-shadow: 0 0px 10px white;
+    }
+    #start {
+      cursor: pointer;
+      background-color: black;
+      color: red;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      width: 80px;
+    }
+    #start:hover {
+      box-shadow: 0 0px 10px white;
+    }
+    #edit_btn {
+      cursor: pointer;
+      background-color: black;
+      color: red;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      width: 80px;
+    }
+    #edit_btn:hover {
+      box-shadow: 0 0px 10px white;
+    }
+    #update_btn {
+      cursor: pointer;
+      background-color: black;
+      color: red;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      width: 80px;
+    }
+    #update_btn:hover {
+      box-shadow: 0 0px 10px white;
+    }
+
+    .timerEditor {
+      display: none;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .time_input {
+      border: none;
+      outline: none;
+      color: red;
+      font-family: "Orbitron", sans-serif;
+      background-color: black;
+      display: inline-block;
+      margin-left: 5px;
+      width: 100px;
+    }
+  </style>
+  <body onload="start()">
+    <h1>Countdown Timer</h1>
+    <div class="timer"></div>
+    <div class="button_area">
+      <button onclick="showEdit()" id="edit_btn">Edit</button>
+      <button onclick="halt()" class="timer_mode" class="start-stop" id="stop">
+        Stop
+      </button>
+      <button onclick="start()" class="start-stop" id="start">Start</button>
+      <button onclick="update()" id="update_btn">Update</button>
+      <div class="timerEditor">
+        <input
+          type="value"
+          placeholder="Hours"
+          class="time_input"
+          id="hr_input"
+        />
+        <input
+          type="value"
+          placeholder="Minutes"
+          class="time_input"
+          id="min_input"
+        />
+      </div>
+    </div>
+    <script>
+      let timerStartHr = 1.5;
+      let timerStartMin = timerStartHr * 60;
+      let time = timerStartMin * 60;
+
+      let interval;
+
+      //Timer function
+      function timer() {
+        let hours = Math.floor(time / 3600); // get hours component
+        let minutes = Math.floor((time % 3600) / 60); // get minutes component
+        let seconds = time % 60;
+
+        let timerNode = document.querySelector(".timer");
+
+        timerNode.innerHTML = `${hours < 10 ? "0" + hours : hours}:${
+          minutes < 10 ? "0" + minutes : minutes
+        }:${seconds < 10 ? "0" + seconds : seconds}`;
+        time--;
+      }
+
+      // Start timer countdown function
+      function start() {
+        interval = setInterval(timer, 1000);
+        document.querySelector(".timer_mode").style.display = "inline-block";
+        document.getElementById("start").style.display = "none";
+        document.getElementById("update_btn").style.display = "none";
+        document.querySelector(".timer").style.display = "block";
+        document.querySelector(".timerEditor").style.display = "none";
+        document.getElementById("edit_btn").style.display = "none";
+        document.querySelector(".timer").style.color = "red";
+        document.querySelector(".timer").style.boxShadow = "0px 0px 10px white";
+        document.querySelector(".button_area").style.flexDirection = "column";
+      }
+
+      //Pause timer countdown
+      function halt() {
+        clearInterval(interval);
+        document.querySelector(".timer_mode").style.display = "none";
+        document.getElementById("start").style.display = "inline-block";
+        document.getElementById("edit_btn").style.display = "inline-block";
+        document.querySelector(".timer").style.color = "blue";
+        document.querySelector(".timer").style.boxShadow = "none";
+        document.querySelector(".button_area").style.flexDirection = "row";
+      }
+
+      //open edit window
+      function showEdit() {
+        document.querySelector(".timer").style.display = "none";
+        document.querySelector(".timer_mode").style.display = "none";
+        document.querySelector(".timerEditor").style.display = "flex";
+        document.getElementById("update_btn").style.display = "inline-block";
+        document.getElementById("edit_btn").style.display = "none";
+        document.querySelector(".button_area").style.width = "400px";
+        document.getElementById("hr_input").focus();
+      }
+
+      //Edit time amount
+      function update() {
+        document.querySelector(".timer").innerHTML = "";
+        document.getElementById("edit_btn").style.display = "inline-block";
+        document.getElementById("stop").style.display = "inline-block";
+        document.querySelector(".timerEditor").style.display = "flex";
+        document.querySelector(".timer").style.display = "block";
+
+        var hr_input = document.getElementById("hr_input");
+        let updated_hrs = parseInt(hr_input.value);
+        var min_input = document.getElementById("min_input");
+        var updated_mins = parseInt(min_input.value);
+
+        timerStartMin = updated_hrs * 60;
+        totalMins = timerStartMin + updated_mins;
+        time = totalMins * 60;
+        start();
+      }
+
+      //Enter key event listener
+      var min_input = document.getElementById("min_input");
+      min_input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("update_btn").click();
+        }
+      });
+    </script>
+  </body>
+</html>
