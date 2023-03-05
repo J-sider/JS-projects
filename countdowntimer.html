@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown Timer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Shantell Sans", cursive;
+        background-color: #f8c630;
+      }
+
+      .deadline {
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        background-color: #451f55;
+        width: 50%;
+        border-radius: 15px;
+        border: 2px solid white;
+      }
+
+      .deadline-format {
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 15px;
+        background-color: #724e91;
+        padding: 5px;
+      }
+
+      .deadline-format h4 {
+        text-align: center;
+      }
+
+      h3 {
+        margin: 20px auto;
+        background-image: url(./images/goats.jpg);
+        width: 550px;
+        height: 300px;
+        background-position: center center;
+        background-size: cover;
+        color: #54cfd8;
+        font-size: 2rem;
+        border: 2px solid black;
+        padding: 5px;
+        box-shadow: 10px 10px 10px #451f55;
+        text-shadow: 3px 3px black;
+      }
+
+      .giveaway {
+        text-align: center;
+      }
+      img {
+        width: 250px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>countdown timer project</h1>
+    <section class="secton-center">
+      <!-- image -->
+      <!-- <article class="bday-img">
+        <img src="./images/goats.jpg" alt="bday picture" />
+      </article> -->
+      <!-- info -->
+      <article class="gift-info">
+        <h3>Remember the woman's birthday!</h3>
+        <h4 class="giveaway">Filler Text</h4>
+        <div class="deadline">
+          <div class="deadline-format">
+            <div>
+              <h4 class="days">46</h4>
+              <span>days</span>
+            </div>
+          </div>
+          <div class="deadline-format">
+            <div>
+              <h4 class="hours">16</h4>
+              <span>hours</span>
+            </div>
+          </div>
+          <div class="deadline-format">
+            <div>
+              <h4 class="mins">46</h4>
+              <span>minutes</span>
+            </div>
+          </div>
+          <div class="deadline-format">
+            <div>
+              <h4 class="secs">46</h4>
+              <span>seconds</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+    <script>
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      const weekdays = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      const giveaway = document.querySelector(".giveaway");
+      const deadline = document.querySelector(".deadline");
+      const items = document.querySelectorAll(".deadline-format h4");
+
+      let futureDate = new Date(2024, 1, 2, 0, 1, 0);
+      console.log(futureDate);
+
+      const year = futureDate.getFullYear();
+      const hours = futureDate.getHours();
+      const minutes = futureDate.getMinutes();
+      const date = futureDate.getDate();
+
+      //   use the array "months" to get name of month
+      let month = futureDate.getMonth();
+      month = months[month];
+
+      //   use the array "weekdays" to get name of day
+      let day = futureDate.getDay();
+      day = weekdays[day];
+
+      giveaway.textContent = `Brosmats birthday is on: ${day}, ${month} ${date}, ${year}
+      ${hours < 10 ? "0" + hours : hours}:${
+        minutes < 10 ? "0" + minutes : minutes
+      }`;
+
+      //   future time in ms
+      const futureTime = futureDate.getTime();
+      //   console.log(futureTime);
+
+      function getRemaingingTime() {
+        const today = new Date().getTime();
+        // console.log(today);
+        const t = futureTime - today;
+        // console.log(t);
+        // 1s = 1000ms
+        // 1m = 60s
+        // 1hr = 60mins
+        // 1d = 24hr
+
+        // values in ms
+        const oneDay = 24 * 60 * 60 * 1000;
+        // console.log(oneDay);
+        const oneHour = 60 * 60 * 1000;
+        const oneMin = 60 * 1000;
+        const oneSec = 1000;
+
+        // calculate countdown values
+        let days = t / oneDay;
+        days = Math.floor(days);
+        // console.log(days);
+        let hours = (t % oneDay) / oneHour;
+        hours = Math.floor(hours);
+        // console.log(hours);
+        let minutes = (t % oneHour) / oneMin;
+        minutes = Math.floor(minutes);
+        // console.log(minutes);
+        let seconds = (t % oneMin) / oneSec;
+        seconds = Math.floor(seconds);
+        // console.log(seconds);
+
+        // set values array
+        const values = [days, hours, minutes, seconds];
+
+        function format(item) {
+          if (item < 10) {
+            return (item = `0${item}`);
+          }
+          return item;
+        }
+
+        items.forEach(function (item, index) {
+          item.innerHTML = format(values[index]);
+        });
+        if (t < 0) {
+          clearInterval(countdown);
+          deadline.innerHTML = `<h4 class = "expired">Birthday Time!</h4>`;
+        }
+      }
+      // countdown
+      let countdown = setInterval(getRemaingingTime, 1000);
+      getRemaingingTime();
+    </script>
+  </body>
+</html>
