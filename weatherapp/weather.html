@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather page</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Lora", serif;
+    }
+
+    .container {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: rgb(251, 242, 133);
+      background: radial-gradient(
+        circle,
+        rgba(239, 239, 230, 0.633) 0%,
+        rgba(224, 196, 91, 0.8407738095238095) 35%,
+        rgb(176, 144, 46) 100%
+      );
+    }
+
+    .weather {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      font-size: 1.5rem;
+    }
+
+    #location {
+      font-size: 3rem;
+      font-weight: 800;
+      font-style: italic;
+    }
+
+    .desc {
+      font-size: 1.25rem;
+      text-transform: capitalize;
+    }
+
+    .circle {
+      background-color: black;
+      border-radius: 50px;
+      height: 15px;
+      width: 15px;
+      margin: 0 15px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <img src="" alt="" id="weather-icon" />
+      <div id="location">Unable to fetch weather</div>
+      <div class="desc">No information available</div>
+      <div class="weather">
+        <div class="c">Error</div>
+        <div class="circle"></div>
+        <div class="f">Error</div>
+      </div>
+      <div class="info">
+        <h4>Sunrise: <span class="sunrise">No information available</span></h4>
+        <h4>Sunset: <span class="sunset">No information available</span></h4>
+      </div>
+    </div>
+    <script>
+      const api = "89938f414ba43fab3fcff0013e144287";
+
+      window.addEventListener("load", () => {
+        let long;
+        let lat;
+        // Accesing Geolocation of User
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            // Storing Longitude and Latitude in variables
+            long = position.coords.longitude;
+            lat = position.coords.latitude;
+            const base =
+              "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${api}&units=metric";
+            console.log(base);
+            // use fetch to get data
+            fetch(base)
+              .then((response) => {
+                return response.json();
+              })
+              .then((data) => {
+                const { temp } = data.main;
+                const place = data.name;
+                const { description, icon } = data.weather[0];
+                const { sunrise, sunset } = data.sys;
+              });
+            console.log(position);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
